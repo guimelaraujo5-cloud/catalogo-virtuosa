@@ -11,94 +11,84 @@
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { font-family: 'Montserrat', sans-serif; color: var(--texto); background-color: var(--branco); }
         header { padding: 15px; text-align: center; border-bottom: 1px solid var(--rose); background: white; position: sticky; top: 0; z-index: 100; }
-        .logo { max-width: 140px; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .logo { max-width: 130px; }
+        .nav-categorias { display: flex; justify-content: center; gap: 10px; padding: 15px 10px; overflow-x: auto; white-space: nowrap; background: white; position: sticky; top: 65px; z-index: 90; border-bottom: 1px solid var(--nude); }
+        .tab-btn { background: none; border: 1px solid var(--rose); padding: 8px 16px; border-radius: 20px; font-size: 0.75rem; color: var(--texto); cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: var(--dourado); color: white; border-color: var(--dourado); font-weight: 600; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 10px 20px 100px; }
         .grid-produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        .produto-card { border: 1px solid var(--nude); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-        .produto-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #f9f9f9; }
-        .marca-tag { font-size: 0.65rem; text-transform: uppercase; color: var(--dourado-dark); font-weight: bold; }
-        .produto-nome { font-size: 0.85rem; margin: 5px 0; font-weight: 600; min-height: 40px; }
-        .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 10px; font-size: 1.1rem; }
-        .btn-add { background: var(--dourado); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 0.75rem; font-weight: bold; }
-        
-        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 25px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        .produto-card { border: 1px solid var(--nude); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; }
+        .produto-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #fdfdfd; }
+        .marca-tag { font-size: 0.6rem; text-transform: uppercase; color: var(--dourado-dark); font-weight: bold; margin-bottom: 4px; }
+        .produto-nome { font-size: 0.8rem; margin-bottom: 8px; font-weight: 600; min-height: 35px; }
+        .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 12px; font-size: 1rem; }
+        .btn-add { background: var(--dourado); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; }
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; width: 95%; max-width: 450px; max-height: 85vh; border-radius: 20px; padding: 25px; overflow-y: auto; }
-        
+        .modal-content { background: white; width: 95%; max-width: 450px; max-height: 90vh; border-radius: 20px; padding: 25px; overflow-y: auto; }
         .item-checkout { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--nude); }
-        .controles-qtd { display: flex; align-items: center; gap: 12px; }
+        .controles-qtd { display: flex; align-items: center; gap: 10px; }
         .btn-qtd { background: var(--nude); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; color: var(--dourado-dark); font-weight: bold; }
-        .btn-remover { color: #ff4d4d; margin-left: 15px; cursor: pointer; }
-
-        .form-group { margin-top: 15px; }
-        .form-group label { display: block; font-size: 0.75rem; color: var(--dourado-dark); font-weight: bold; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--rose); border-radius: 8px; font-family: 'Montserrat'; }
+        .btn-remover { color: #cc0000; margin-left: 10px; cursor: pointer; }
         .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; }
+        @media (max-width: 480px) { .grid-produtos { grid-template-columns: 1fr 1fr; gap: 10px; } }
     </style>
 </head>
 <body>
-
-    <header>
-        <img src="1000128161.jpg" alt="Virtuosa" class="logo">
-    </header>
-
-    <div class="container">
-        <h2 style="text-align: center; margin-bottom: 25px; font-family: 'Playfair Display'; color: var(--dourado-dark);">Beleza & Cuidado</h2>
-        <div class="grid-produtos" id="vitrine"></div>
+    <header><img src="1000128161.jpg" alt="VIRTUOSA" class="logo"></header>
+    <div class="nav-categorias">
+        <button class="tab-btn active" onclick="filtrar('todos')">Todos</button>
+        <button class="tab-btn" onclick="filtrar('Natura')">Natura</button>
+        <button class="tab-btn" onclick="filtrar('Avon')">Avon</button>
+        <button class="tab-btn" onclick="filtrar('O Boticário')">Boticário</button>
+        <button class="tab-btn" onclick="filtrar('Eudora')">Eudora</button>
+        <button class="tab-btn" onclick="filtrar('Lingerie')">Lingerie</button>
     </div>
-
-    <div class="cart-badge" onclick="abrirCheckout()">
-        <i class="fas fa-shopping-bag"></i>
-        <span id="cart-count">0</span> - R$ <span id="cart-total">0,00</span>
-    </div>
-
+    <div class="container"><div class="grid-produtos" id="vitrine"></div></div>
+    <div class="cart-badge" onclick="abrirCheckout()"><i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span> - R$ <span id="cart-total">0,00</span></div>
     <div class="modal" id="modalCheckout">
         <div class="modal-content">
-            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="font-family: 'Playfair Display'; color: var(--dourado-dark);">Sua Sacola</h3>
-                <i class="fas fa-times" onclick="fecharCheckout()" style="cursor:pointer; font-size: 1.2rem;"></i>
-            </div>
-
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;"><h3>Minha Sacola</h3><i class="fas fa-times" onclick="fecharCheckout()" style="cursor:pointer"></i></div>
             <div id="resumoItens"></div>
-
             <form id="formPedido">
-                <div class="form-group"><label>Nome</label><input type="text" id="nome" required></div>
-                <div class="form-group"><label>Endereço Completo</label><input type="text" id="endereco" required></div>
-                <div class="form-group"><label>Ponto de Referência</label><input type="text" id="referencia"></div>
-                <div class="form-group">
-                    <label>Forma de Pagamento</label>
-                    <select id="pagamento">
+                <div style="margin-top:10px;"><label style="font-size:0.7rem; font-weight:bold;">Nome</label><input type="text" id="nome" required style="width:100%; padding:10px; border:1px solid var(--rose); border-radius:8px;"></div>
+                <div style="margin-top:10px;"><label style="font-size:0.7rem; font-weight:bold;">Endereço</label><input type="text" id="endereco" required style="width:100%; padding:10px; border:1px solid var(--rose); border-radius:8px;"></div>
+                <div style="margin-top:10px;"><label style="font-size:0.7rem; font-weight:bold;">Ponto de Referência</label><input type="text" id="referencia" style="width:100%; padding:10px; border:1px solid var(--rose); border-radius:8px;"></div>
+                <div style="margin-top:10px;">
+                    <label style="font-size:0.7rem; font-weight:bold;">Pagamento</label>
+                    <select id="pagamento" style="width:100%; padding:10px; border:1px solid var(--rose); border-radius:8px;">
                         <option value="PIX">PIX</option>
-                        <option value="Cartão">Cartão de Crédito</option>
+                        <option value="Cartão">Cartão</option>
                         <option value="Dinheiro">Dinheiro</option>
                     </select>
                 </div>
-                <button type="button" class="btn-finalizar" onclick="enviarPedido()">
-                    <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
-                </button>
+                <button type="button" class="btn-finalizar" onclick="enviarPedido()"><i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP</button>
             </form>
         </div>
     </div>
-
     <script>
-        // LISTA COM EXTENSÕES .JPEG CORRIGIDAS
         const produtos = [
+            // NATURA
             { id: 1, marca: "Natura", nome: "Ilía Clássico - 50ml", preco: 174.90, img: "ilia_classico.jpeg" },
             { id: 2, marca: "Natura", nome: "Ilía Plena - 50ml", preco: 174.90, img: "ilia_plena.jpeg" },
-            { id: 3, marca: "Natura", nome: "Ilía Completa - 50ml", preco: 174.90, img: "ilia_completa.jpeg" },
-            { id: 4, marca: "Natura", nome: "Sabonete Líquido Tododia", preco: 37.90, img: "sabonete_tododia.jpeg" },
-            { id: 5, marca: "Natura", nome: "Máscara Capilar Tododia", preco: 42.90, img: "mascara_tododia.jpeg" },
-            { id: 6, marca: "O Boticário", nome: "Boti Baby Colônia do Sol", preco: 84.90, img: "boti_baby.jpeg" },
-            { id: 7, marca: "Natura", nome: "Kit Mamãe e Bebê", preco: 43.90, img: "mamae_bebe.jpeg" },
-            { id: 8, marca: "Avon", nome: "Creme Facial Care 5 em 1", preco: 22.90, img: "avon_care.jpeg" },
-            { id: 9, marca: "Avon", nome: "Desodorante em Creme Avon", preco: 12.90, img: "desodorante_avon.jpeg" },
-            { id: 10, marca: "Avon", nome: "Sabonete Líquido Íntimo", preco: 24.90, img: "intimo_avon.jpeg" }
+            { id: 3, marca: "Natura", nome: "Sabonete Tododia Macadâmia", preco: 37.90, img: "sabonete_tododia.jpeg" },
+            // BOTICÁRIO
+            { id: 4, marca: "O Boticário", nome: "Malbec Desodorante Colônia 100ml", preco: 209.90, img: "malbec.jpeg" },
+            { id: 5, marca: "O Boticário", nome: "Boti Baby Colônia do Sol 100ml", preco: 84.90, img: "boti_baby.jpeg" },
+            // EUDORA
+            { id: 6, marca: "Eudora", nome: "Batom Matte Tint", preco: 44.90, img: "batom_eudora.jpeg" },
+            // LINGERIE (Extraído do Catálogo Virtuosa)
+            { id: 7, marca: "Lingerie", nome: "Body Corset Olivia Vermelho", preco: 85.00, img: "olivia.jpeg" },
+            { id: 8, marca: "Lingerie", nome: "Conjunto Lorena Castanho", preco: 69.90, img: "lorena.jpeg" },
+            { id: 9, marca: "Lingerie", nome: "Conjunto Paradise Branco", preco: 75.00, img: "paradise.jpeg" },
+            { id: 10, marca: "Lingerie", nome: "Conjunto Eliza Vermelho", preco: 59.90, img: "eliza.jpeg" },
+            { id: 11, marca: "Lingerie", nome: "Calcinha Thais Fio Duplo", preco: 15.00, img: "thais.jpeg" }
         ];
-
         let sacola = {};
-
-        function renderVitrine() {
-            document.getElementById('vitrine').innerHTML = produtos.map(p => `
+        function renderVitrine(categoria = 'todos') {
+            const vitrine = document.getElementById('vitrine');
+            const filtrados = categoria === 'todos' ? produtos : produtos.filter(p => p.marca === categoria);
+            vitrine.innerHTML = filtrados.map(p => `
                 <div class="produto-card">
                     <img src="${p.img}" class="produto-img">
                     <div class="marca-tag">${p.marca}</div>
@@ -108,76 +98,47 @@
                 </div>
             `).join('');
         }
-
+        function filtrar(categoria) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.innerText === categoria || (categoria === 'todos' && btn.innerText === 'Todos')));
+            renderVitrine(categoria);
+        }
         function addSacola(id) {
             if (sacola[id]) { sacola[id].qtd += 1; } 
             else { const p = produtos.find(prod => prod.id === id); sacola[id] = { ...p, qtd: 1 }; }
             atualizarBadge();
         }
-
         function mudarQtd(id, delta) {
-            if (sacola[id]) {
-                sacola[id].qtd += delta;
-                if (sacola[id].qtd <= 0) delete sacola[id];
-                atualizarBadge();
-                abrirCheckout();
-            }
+            if (sacola[id]) { sacola[id].qtd += delta; if (sacola[id].qtd <= 0) delete sacola[id]; atualizarBadge(); abrirCheckout(); }
         }
-
-        function removerItem(id) {
-            delete sacola[id];
-            atualizarBadge();
-            abrirCheckout();
-        }
-
+        function removerItem(id) { delete sacola[id]; atualizarBadge(); abrirCheckout(); }
         function atualizarBadge() {
             let totalItens = 0; let precoTotal = 0;
             Object.values(sacola).forEach(item => { totalItens += item.qtd; precoTotal += (item.preco * item.qtd); });
             document.getElementById('cart-count').innerText = totalItens;
             document.getElementById('cart-total').innerText = precoTotal.toFixed(2).replace('.', ',');
         }
-
         function abrirCheckout() {
             const resumo = document.getElementById('resumoItens');
             const itensArray = Object.values(sacola);
             if(itensArray.length === 0) { fecharCheckout(); return; }
-
             resumo.innerHTML = itensArray.map(item => `
                 <div class="item-checkout">
-                    <div style="flex-grow: 1;">
-                        <div style="font-size:0.85rem; font-weight:600;">${item.nome}</div>
-                        <div style="font-size:0.75rem; color:var(--dourado-dark)">R$ ${item.preco.toFixed(2)} un.</div>
-                    </div>
-                    <div class="controles-qtd">
-                        <button class="btn-qtd" onclick="mudarQtd(${item.id}, -1)">-</button>
-                        <span style="font-weight:bold">${item.qtd}</span>
-                        <button class="btn-qtd" onclick="mudarQtd(${item.id}, 1)">+</button>
-                    </div>
+                    <div style="flex-grow: 1;"><div style="font-size:0.8rem; font-weight:600;">${item.nome}</div></div>
+                    <div class="controles-qtd"><button class="btn-qtd" onclick="mudarQtd(${item.id}, -1)">-</button><span>${item.qtd}</span><button class="btn-qtd" onclick="mudarQtd(${item.id}, 1)">+</button></div>
                     <i class="fas fa-trash-alt btn-remover" onclick="removerItem(${item.id})"></i>
                 </div>
             `).join('');
             document.getElementById('modalCheckout').style.display = 'flex';
         }
-
         function fecharCheckout() { document.getElementById('modalCheckout').style.display = 'none'; }
-
         function enviarPedido() {
             const nome = document.getElementById('nome').value;
             const endereco = document.getElementById('endereco').value;
-            const ref = document.getElementById('referencia').value;
-            const pag = document.getElementById('pagamento').value;
-            if(!nome || !endereco) return alert("Por favor, preencha os dados de entrega.");
-
-            let total = 0;
-            let texto = `*NOVO PEDIDO - VIRTUOSA*%0A---------------------------%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Ref:* ${ref}%0A---------------------------%0A*ITENS:*%0A`;
-            Object.values(sacola).forEach(item => {
-                texto += `• ${item.qtd}x ${item.nome} (R$ ${(item.preco * item.qtd).toFixed(2).replace('.', ',')})%0A`;
-                total += (item.preco * item.qtd);
-            });
-            texto += `---------------------------%0A*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*%0A*Pagamento:* ${pag}`;
+            if(!nome || !endereco) return alert("Preencha os dados!");
+            let texto = `*PEDIDO VIRTUOSA*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A%0A*ITENS:*%0A`;
+            Object.values(sacola).forEach(item => { texto += `• ${item.qtd}x ${item.nome}%0A`; });
             window.open(`https://wa.me/5589999263346?text=${texto}`);
         }
-
         renderVitrine();
     </script>
 </body>
