@@ -12,60 +12,117 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- ESTILOS VISUAIS (V22 - GRID ROBUSTO) --- */
+        /* --- ESTILOS VISUAIS (V23 - SIDEBAR LAYOUT) --- */
         :root { --dourado: #C5A059; --dourado-dark: #A68546; --nude: #F9F1F0; --rose: #EAD8D3; --branco: #FFFFFF; --texto: #4A4A4A; }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
-        body { font-family: 'Montserrat', sans-serif; color: var(--texto); background-color: var(--branco); -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Montserrat', sans-serif; color: var(--texto); background-color: #fafafa; -webkit-tap-highlight-color: transparent; }
         
-        header { padding: 15px; text-align: center; border-bottom: 1px solid var(--rose); background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .logo { max-width: 130px; cursor: pointer; }
+        /* HEADER SIMPLIFICADO */
+        header { padding: 15px; text-align: center; background: white; border-bottom: 1px solid var(--rose); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .logo { max-width: 120px; cursor: pointer; }
 
-        .nav-categorias { display: flex; gap: 10px; padding: 15px 10px; overflow-x: auto; white-space: nowrap; background: white; position: sticky; top: 65px; z-index: 90; border-bottom: 1px solid var(--nude); scrollbar-width: none; }
-        .tab-btn { background: none; border: 1px solid var(--rose); padding: 8px 18px; border-radius: 20px; font-size: 0.75rem; color: var(--texto); transition: 0.3s; cursor: pointer; }
-        .tab-btn.active { background: var(--dourado); color: white; border-color: var(--dourado); font-weight: 600; }
-        
-        .btn-admin-painel { display: none; color: #22c55e; border-color: #22c55e; font-weight: bold; }
-        .btn-admin-sair { display: none; color: #ef4444; border-color: #ef4444; font-weight: bold; }
+        /* --- LAYOUT PRINCIPAL (SIDEBAR + GRID) --- */
+        .main-wrapper {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 30px;
+            padding: 0 20px;
+            align-items: flex-start; /* Importante para a sidebar não esticar */
+        }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 15px 20px 100px; }
+        /* --- MENU LATERAL (SIDEBAR) --- */
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--rose);
+            position: sticky;
+            top: 90px; /* Fica fixo ao rolar a página */
+            flex-shrink: 0; /* Não deixa espremer */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .sidebar-title { font-family: 'Playfair Display', serif; font-weight: bold; margin-bottom: 15px; color: var(--dourado-dark); font-size: 1.1rem; border-bottom: 1px solid var(--rose); padding-bottom: 10px; }
+
+        .menu-btn {
+            display: flex; align-items: center; gap: 10px;
+            width: 100%; text-align: left; padding: 12px 15px;
+            margin-bottom: 8px; border: 1px solid transparent;
+            background: transparent; color: var(--texto);
+            border-radius: 8px; cursor: pointer; transition: 0.3s;
+            font-size: 0.9rem; font-weight: 500;
+        }
         
-        /* GRID DE VERDADE (Evita bugs visuais) */
+        .menu-btn:hover { background: var(--nude); color: var(--dourado-dark); }
+        .menu-btn.active { background: var(--dourado); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3); }
+        .menu-btn i { width: 20px; text-align: center; }
+
+        /* Botões Admin no Menu */
+        .btn-admin-painel { display: none; margin-top: 20px; border: 1px dashed #22c55e; color: #166534; }
+        .btn-admin-sair { display: none; border: 1px dashed #ef4444; color: #991b1b; }
+
+        /* --- VITRINE DE PRODUTOS --- */
+        .conteudo-produtos { flex-grow: 1; width: 100%; }
+
         .grid-produtos { 
             display: grid; 
-            grid-template-columns: repeat(2, 1fr); /* 2 Colunas no celular */
-            gap: 15px; 
-            align-items: start; /* Impede que estiquem */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
             opacity: 1; transition: opacity 0.4s ease;
         }
-        @media (min-width: 768px) { .grid-produtos { grid-template-columns: repeat(4, 1fr); } }
 
-        .produto-card { 
-            border: 1px solid var(--nude); border-radius: 12px; padding: 12px; 
-            text-align: center; display: flex; flex-direction: column; 
-            background: #fff; position: relative; height: 100%;
+        /* RESPONSIVIDADE (MOBILE) */
+        @media (max-width: 900px) {
+            .main-wrapper { flex-direction: column; gap: 15px; margin-top: 10px; }
+            
+            /* Transforma Sidebar em Menu Horizontal no Celular */
+            .sidebar { 
+                width: 100%; position: static; 
+                display: flex; overflow-x: auto; 
+                padding: 10px; white-space: nowrap; gap: 10px;
+                border: none; background: transparent; box-shadow: none;
+            }
+            .sidebar-title { display: none; } /* Esconde título "Categorias" no mobile */
+            .menu-btn { 
+                width: auto; flex-shrink: 0; 
+                background: white; border: 1px solid var(--rose); 
+                padding: 8px 16px; font-size: 0.8rem; margin-bottom: 0;
+                border-radius: 50px; /* Botões redondos no mobile */
+            }
+            .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
+
+        /* CARD DE PRODUTO */
+        .produto-card { 
+            border: 1px solid var(--nude); border-radius: 12px; padding: 10px; 
+            text-align: center; display: flex; flex-direction: column; 
+            background: #fff; height: 100%; transition: transform 0.2s;
+        }
+        .produto-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
         .produto-img { width: 100%; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #fdfdfd; }
-        
-        /* FORMATOS CONTROLADOS PELO CSS */
         .ratio-quadrado { aspect-ratio: 1 / 1; }
         .ratio-retrato { aspect-ratio: 3 / 4; }
         .ratio-paisagem { aspect-ratio: 4 / 3; }
 
         .marca-tag { font-size: 0.6rem; text-transform: uppercase; color: var(--dourado-dark); font-weight: bold; margin-bottom: 4px; }
-        .produto-nome { font-size: 0.8rem; margin-bottom: 8px; font-weight: 600; min-height: 35px; line-height: 1.2; }
-        .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 12px; font-size: 1rem; }
+        .produto-nome { font-size: 0.85rem; margin-bottom: 8px; font-weight: 600; min-height: 40px; line-height: 1.3; color: #333; }
+        .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; }
         
-        /* Botão sempre no final */
-        .btn-add { background: var(--dourado); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: bold; width: 100%; transition: 0.2s; margin-top: auto; }
+        .btn-add { background: var(--dourado); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; width: 100%; transition: 0.2s; margin-top: auto; letter-spacing: 0.5px; }
         .btn-add:active { transform: scale(0.95); }
         
-        .btn-edit { position: absolute; top: 5px; right: 5px; background: #333; color: white; border-radius: 50%; width: 25px; height: 25px; font-size: 0.7rem; cursor: pointer; display: none; border: none; z-index: 10; }
+        .btn-edit { position: absolute; top: 5px; right: 5px; background: white; color: #333; border-radius: 50%; width: 30px; height: 30px; font-size: 0.8rem; cursor: pointer; display: none; border: 1px solid #eee; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* Restante do CSS igual */
-        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; width: 95%; max-width: 450px; max-height: 90vh; border-radius: 20px; padding: 25px; overflow-y: auto; }
+        /* (Mantendo Modais e Carrinho iguais à V22 - Ocultados para economizar espaço aqui, mas estão completos no código final) */
+        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; transition: 0.3s; }
+        .cart-badge:hover { transform: scale(1.05); }
+        
+        /* Modais */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; width: 95%; max-width: 450px; max-height: 90vh; border-radius: 20px; padding: 25px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         .item-checkout { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--nude); }
         .controles-qtd { display: flex; align-items: center; gap: 10px; }
         .btn-qtd { background: var(--nude); border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: var(--dourado-dark); font-weight: bold; }
@@ -77,7 +134,7 @@
         .total-geral { margin-top: 20px; padding: 15px; background: var(--nude); border-radius: 8px; text-align: right; font-weight: bold; color: var(--dourado-dark); font-size: 1.1rem; }
         .pix-area { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; }
         .btn-copiar-pix { background: #16a34a; color: white; border: none; padding: 5px 15px; border-radius: 15px; font-size: 0.7rem; cursor: pointer; margin-left: 5px; font-weight: bold; }
-        .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; }
+        .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
         .btn-salvar { background: #22c55e; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; cursor: pointer; }
         .btn-delete { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 8px; margin-top: 10px; cursor: pointer; width: 100%; }
         #previewImg { width: 100%; height: 150px; object-fit: contain; margin-top: 10px; border: 1px solid #eee; display: none; }
@@ -89,22 +146,27 @@
         <img src="1000128161.jpg" alt="VIRTUOSA" class="logo" id="logoClick">
     </header>
 
-    <div class="nav-categorias">
-        <button class="tab-btn active" onclick="filtrar('todos')">Todos</button>
-        <button class="tab-btn" onclick="filtrar('Natura')">Natura</button>
-        <button class="tab-btn" onclick="filtrar('Avon')">Avon</button>
-        <button class="tab-btn" onclick="filtrar('O Boticário')">Boticário</button>
-        <button class="tab-btn" onclick="filtrar('Eudora')">Eudora</button>
-        <button class="tab-btn" onclick="filtrar('Lingerie')">Lingerie</button>
+    <div class="main-wrapper">
         
-        <button class="tab-btn btn-admin-painel" id="btnAdminPublico" onclick="abrirAdmin()">+ NOVO</button>
-        <button class="tab-btn btn-admin-sair" id="btnSairAdmin" onclick="sairAdmin()">SAIR</button>
-    </div>
+        <aside class="sidebar">
+            <div class="sidebar-title">Categorias</div>
+            
+            <button class="menu-btn active" onclick="filtrar('todos')"><i class="fas fa-th-large"></i> Todos</button>
+            <button class="menu-btn" onclick="filtrar('Natura')"><i class="fas fa-leaf"></i> Natura</button>
+            <button class="menu-btn" onclick="filtrar('Avon')"><i class="fas fa-magic"></i> Avon</button>
+            <button class="menu-btn" onclick="filtrar('O Boticário')"><i class="fas fa-pump-soap"></i> Boticário</button>
+            <button class="menu-btn" onclick="filtrar('Eudora')"><i class="fas fa-gem"></i> Eudora</button>
+            <button class="menu-btn" onclick="filtrar('Lingerie')"><i class="fas fa-heart"></i> Lingerie</button>
+            
+            <button class="menu-btn btn-admin-painel" id="btnAdminPublico" onclick="abrirAdmin()"><i class="fas fa-plus-circle"></i> Novo Produto</button>
+            <button class="menu-btn btn-admin-sair" id="btnSairAdmin" onclick="sairAdmin()"><i class="fas fa-sign-out-alt"></i> Sair Admin</button>
+        </aside>
 
-    <div class="container">
-        <div class="grid-produtos" id="vitrine">
-            <p style="text-align:center; grid-column:1/-1;">Carregando vitrine...</p>
-        </div>
+        <main class="conteudo-produtos">
+            <div class="grid-produtos" id="vitrine">
+                <p style="text-align:center; grid-column:1/-1; padding: 40px;">Carregando sua vitrine...</p>
+            </div>
+        </main>
     </div>
 
     <div class="cart-badge" onclick="abrirCheckout()">
@@ -180,7 +242,7 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO FIREBASE (Chaves Originais)
+        // CONFIGURAÇÃO FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAZEhg5sWCrDYoiL67t_1jvG-L454brf44",
             authDomain: "virtuosa-catalogo.firebaseapp.com",
@@ -198,6 +260,7 @@
         let isAdmin = false;
         let filtroAtual = 'todos';
 
+        // Carregamento Inicial
         db.collection("produtos").onSnapshot((querySnapshot) => {
             produtosCache = [];
             querySnapshot.forEach((doc) => {
@@ -206,26 +269,30 @@
             renderVitrine();
         });
 
-        // RENDERIZAÇÃO (Volta para Grid Padrão com Flex)
         function renderVitrine(categoria) {
             const vitrine = document.getElementById('vitrine');
             vitrine.style.opacity = '0';
 
             setTimeout(() => {
                 if (categoria) filtroAtual = categoria;
-                document.querySelectorAll('.tab-btn').forEach(btn => {
-                    const text = btn.innerText === 'Boticário' ? 'O Boticário' : (btn.innerText === 'Todos' ? 'todos' : btn.innerText);
-                    btn.classList.toggle('active', text === filtroAtual);
+                
+                // Atualiza Botões Ativos (No Menu Lateral)
+                document.querySelectorAll('.menu-btn').forEach(btn => {
+                    // Remove active de todos
+                    btn.classList.remove('active');
+                    // Verifica se o texto do botão bate com o filtro
+                    if(btn.innerText.includes(filtroAtual) || (filtroAtual === 'todos' && btn.innerText.includes('Todos')) || (filtroAtual === 'O Boticário' && btn.innerText.includes('Boticário'))) {
+                        btn.classList.add('active');
+                    }
                 });
 
                 const filtrados = filtroAtual === 'todos' ? produtosCache : produtosCache.filter(p => p.marca.trim() === filtroAtual);
                 
                 if(filtrados.length === 0) {
-                    vitrine.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 20px; color: #999;">Nenhum produto encontrado.</p>';
+                    vitrine.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #999;"><i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i><p>Nenhum produto nesta categoria.</p></div>';
                 } else {
                     vitrine.innerHTML = filtrados.map(p => {
                         const classeFormato = p.formato ? p.formato : 'ratio-quadrado';
-                        
                         return `
                         <div class="produto-card">
                             ${isAdmin ? `<button class="btn-edit" style="display:block" onclick="editarProduto('${p.id}')"><i class="fas fa-pen"></i></button>` : ''}
@@ -238,7 +305,7 @@
                     `}).join('');
                 }
                 vitrine.style.opacity = '1';
-            }, 400);
+            }, 300);
         }
 
         // --- SISTEMA ADMIN ---
@@ -248,9 +315,10 @@
             clicks++;
             if(clicks === 5) {
                 isAdmin = true;
-                document.getElementById('btnAdminPublico').style.display = 'block';
-                document.getElementById('btnSairAdmin').style.display = 'block';
-                alert("MODO ADMIN ATIVADO!");
+                // Mostra botões no Menu Lateral
+                document.getElementById('btnAdminPublico').style.display = 'flex';
+                document.getElementById('btnSairAdmin').style.display = 'flex';
+                alert("MODO ADMIN ATIVADO! Veja as opções no menu lateral.");
                 renderVitrine();
             }
         };
@@ -264,10 +332,10 @@
             renderVitrine();
         }
 
+        // --- FUNÇÕES DE CRUD, UPLOAD, CARRINHO (Mantidas idênticas à V22) ---
         function abrirAdmin() { document.getElementById('modalAdmin').style.display = 'flex'; limparAdmin(); }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- UPLOAD E SALVAMENTO ---
         function previewImagem(event) {
             const file = event.target.files[0];
             if(file) {
@@ -288,8 +356,7 @@
                         const canvas = document.createElement('canvas');
                         const ctx = canvas.getContext('2d');
                         const MAX_WIDTH = 800;
-                        let width = img.width;
-                        let height = img.height;
+                        let width = img.width; let height = img.height;
                         if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                         canvas.width = width; canvas.height = height;
                         ctx.drawImage(img, 0, 0, width, height);
@@ -302,19 +369,13 @@
 
         async function salvarProduto() {
             const btn = document.getElementById('btnSalvarProd');
-            btn.innerText = "Processando...";
-            btn.disabled = true;
-
+            btn.innerText = "Processando..."; btn.disabled = true;
             const id = document.getElementById('editId').value;
             const arquivo = document.getElementById('admArquivo').files[0];
             let urlFinal = document.getElementById('urlImagemAtual').value;
 
             try {
-                if (arquivo) {
-                    btn.innerText = "Comprimindo...";
-                    urlFinal = await comprimirImagem(arquivo);
-                }
-
+                if (arquivo) { btn.innerText = "Comprimindo..."; urlFinal = await comprimirImagem(arquivo); }
                 const dados = {
                     marca: document.getElementById('admMarca').value,
                     nome: document.getElementById('admNome').value,
@@ -322,23 +383,11 @@
                     formato: document.getElementById('admFormato').value,
                     img: urlFinal
                 };
-
-                if(id) {
-                    await db.collection("produtos").doc(id).update(dados);
-                } else {
-                    await db.collection("produtos").add(dados);
-                }
-
-                alert("Produto Salvo!");
-                fecharModal('modalAdmin');
-
-            } catch (erro) {
-                console.error(erro);
-                alert("Erro: " + erro.message);
-            } finally {
-                btn.innerText = "SALVAR NO BANCO";
-                btn.disabled = false;
-            }
+                if(id) { await db.collection("produtos").doc(id).update(dados); } 
+                else { await db.collection("produtos").add(dados); }
+                alert("Produto Salvo!"); fecharModal('modalAdmin');
+            } catch (erro) { console.error(erro); alert("Erro: " + erro.message); } 
+            finally { btn.innerText = "SALVAR NO BANCO"; btn.disabled = false; }
         }
 
         function editarProduto(id) {
@@ -348,33 +397,21 @@
             document.getElementById('admNome').value = p.nome;
             document.getElementById('admPreco').value = p.preco;
             document.getElementById('admFormato').value = p.formato || 'ratio-quadrado';
-            
             document.getElementById('urlImagemAtual').value = p.img;
             document.getElementById('previewImg').src = p.img;
             document.getElementById('previewImg').style.display = 'block';
-
             document.getElementById('btnDeletar').style.display = 'block';
             document.getElementById('modalAdmin').style.display = 'flex';
         }
 
         function deletarProduto() {
-            if(confirm("Apagar produto?")) {
-                db.collection("produtos").doc(document.getElementById('editId').value).delete().then(() => fecharModal('modalAdmin'));
-            }
+            if(confirm("Apagar produto?")) { db.collection("produtos").doc(document.getElementById('editId').value).delete().then(() => fecharModal('modalAdmin')); }
         }
 
         function limparAdmin() {
-            document.getElementById('editId').value = "";
-            document.getElementById('admNome').value = "";
-            document.getElementById('admPreco').value = "";
-            document.getElementById('admArquivo').value = "";
-            document.getElementById('urlImagemAtual').value = "";
-            document.getElementById('admFormato').value = "ratio-quadrado";
-            document.getElementById('previewImg').style.display = 'none';
-            document.getElementById('btnDeletar').style.display = 'none';
+            document.getElementById('editId').value = ""; document.getElementById('admNome').value = ""; document.getElementById('admPreco').value = ""; document.getElementById('admArquivo').value = ""; document.getElementById('urlImagemAtual').value = ""; document.getElementById('admFormato').value = "ratio-quadrado"; document.getElementById('previewImg').style.display = 'none'; document.getElementById('btnDeletar').style.display = 'none';
         }
 
-        // --- CARRINHO, PIX E WHATSAPP ---
         function filtrar(categoria) { renderVitrine(categoria); }
         function addSacola(id) { if (sacola[id]) { sacola[id].qtd += 1; } else { const p = produtosCache.find(prod => prod.id === id); sacola[id] = { ...p, qtd: 1 }; } atualizarBadge(); }
         function mudarQtd(id, delta) { if (sacola[id]) { sacola[id].qtd += delta; if (sacola[id].qtd <= 0) delete sacola[id]; atualizarBadge(); abrirCheckout(); } }
