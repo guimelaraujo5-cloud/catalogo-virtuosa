@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- ESTILOS VISUAIS (V24.2 - MOBILE ADMIN FIX) --- */
+        /* --- ESTILOS V25.1 (LIBERDADE DE FORMATO + ALINHAMENTO) --- */
         :root { --dourado: #C5A059; --dourado-dark: #A68546; --nude: #F9F1F0; --rose: #EAD8D3; --branco: #FFFFFF; --texto: #4A4A4A; }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { font-family: 'Montserrat', sans-serif; color: var(--texto); background-color: #fafafa; -webkit-tap-highlight-color: transparent; }
@@ -22,16 +22,13 @@
 
         .main-wrapper { display: flex; max-width: 1200px; margin: 20px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
 
-        /* SIDEBAR (MENU DESKTOP) */
+        /* SIDEBAR */
         .sidebar { width: 250px; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--rose); position: sticky; top: 90px; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .sidebar-title { font-family: 'Playfair Display', serif; font-weight: bold; margin-bottom: 15px; color: var(--dourado-dark); font-size: 1.1rem; border-bottom: 1px solid var(--rose); padding-bottom: 10px; }
-
         .menu-btn { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 12px 15px; margin-bottom: 8px; border: 1px solid transparent; background: transparent; color: var(--texto); border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; font-weight: 500; }
         .menu-btn:hover { background: var(--nude); color: var(--dourado-dark); }
         .menu-btn.active { background: var(--dourado); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3); }
         .menu-btn i { width: 25px; text-align: center; }
-
-        /* Botões Admin (Desktop Default) */
         .admin-section { border-top: 1px dashed var(--rose); margin-top: 15px; padding-top: 15px; display: none; flex-direction: column; gap: 5px; }
         .btn-admin-action { border: 1px dashed #22c55e; color: #166534; }
         .btn-admin-sair { border: 1px dashed #ef4444; color: #991b1b; }
@@ -40,60 +37,62 @@
         .conteudo-produtos { flex-grow: 1; width: 100%; }
         .grid-produtos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; opacity: 1; transition: opacity 0.4s ease; }
 
-        /* --- RESPONSIVIDADE MOBILE (Ajustado na V24.2) --- */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; gap: 15px; margin-top: 10px; }
-            
-            /* Menu horizontal no topo */
-            .sidebar { 
-                width: 100%; position: sticky; top: 60px; z-index: 90; 
-                display: flex; flex-wrap: wrap; /* Permite quebrar linha para o admin */
-                padding: 10px; gap: 10px; border: none; background: white; 
-                box-shadow: 0 2px 5px rgba(0,0,0,0.05); align-items: center;
-            }
-            
-            /* Contêiner para os botões de categoria rolarem horizontalmente */
-            #listaCategoriasMenu {
-                display: flex; overflow-x: auto; white-space: nowrap; gap: 10px; flex-grow: 1;
-                scrollbar-width: none; /* Firefox */
-            }
-            #listaCategoriasMenu::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
-
+            .sidebar { width: 100%; position: sticky; top: 60px; z-index: 90; display: flex; flex-wrap: wrap; padding: 10px; gap: 10px; border: none; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); align-items: center; }
+            #listaCategoriasMenu { display: flex; overflow-x: auto; white-space: nowrap; gap: 10px; flex-grow: 1; scrollbar-width: none; }
+            #listaCategoriasMenu::-webkit-scrollbar { display: none; }
             .sidebar-title { display: none !important; }
-            
             .menu-btn { width: auto; flex-shrink: 0; background: white; border: 1px solid var(--rose); padding: 8px 16px; font-size: 0.8rem; margin-bottom: 0; border-radius: 50px; }
-            
-            /* Área Admin no Mobile (Quando ativada) */
-            .admin-section {
-                width: 100%;
-                flex-direction: row !important; /* Botões lado a lado */
-                justify-content: space-around;
-                border-top: 1px solid var(--rose);
-                padding-top: 10px; margin-top: 5px;
-                /* O JS vai mudar display:none para display:flex quando logar */
-            }
-            .menu-btn.btn-admin-action, .menu-btn.btn-admin-sair {
-                 font-size: 0.75rem; padding: 8px 12px; flex-grow: 1; justify-content: center;
-            }
-
+            .admin-section { width: 100%; flex-direction: row !important; justify-content: space-around; border-top: 1px solid var(--rose); padding-top: 10px; margin-top: 5px; }
+            .menu-btn.btn-admin-action, .menu-btn.btn-admin-sair { font-size: 0.75rem; padding: 8px 12px; flex-grow: 1; justify-content: center; }
             .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
 
         /* CARD PRODUTO */
-        .produto-card { border: 1px solid var(--nude); border-radius: 12px; padding: 10px; text-align: center; display: flex; flex-direction: column; background: #fff; height: 100%; transition: transform 0.2s; position: relative; }
+        .produto-card { 
+            border: 1px solid var(--nude); border-radius: 12px; padding: 10px; 
+            text-align: center; display: flex; flex-direction: column; 
+            background: #fff; height: 100%; position: relative;
+            transition: transform 0.2s;
+        }
         .produto-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .produto-img { width: 100%; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #fdfdfd; }
-        .ratio-quadrado { aspect-ratio: 1 / 1; }
-        .ratio-retrato { aspect-ratio: 3 / 4; }
-        .ratio-paisagem { aspect-ratio: 4 / 3; }
+        
+        /* FORMATOS DE IMAGEM (Liberdade Total) */
+        .img-container {
+            width: 100%; position: relative; margin-bottom: 10px;
+            border-radius: 8px; overflow: hidden; background: #fdfdfd;
+        }
+        /* As classes abaixo definem a altura baseada na largura (Aspect Ratio) */
+        .ratio-quadrado { padding-top: 100%; } /* 1:1 */
+        .ratio-retrato { padding-top: 133%; }  /* 3:4 (Mais alto) */
+        .ratio-paisagem { padding-top: 75%; }  /* 4:3 (Mais baixo) */
+        
+        .produto-img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; /* ESSENCIAL: Preenche tudo sem deixar branco, pode cortar bordas */
+        }
+
         .marca-tag { font-size: 0.6rem; text-transform: uppercase; color: var(--dourado-dark); font-weight: bold; margin-bottom: 4px; }
-        .produto-nome { font-size: 0.85rem; margin-bottom: 8px; font-weight: 600; min-height: 40px; line-height: 1.3; color: #333; }
+        
+        /* ALINHAMENTO DE TEXTO */
+        .produto-nome { 
+            font-size: 0.85rem; margin-bottom: 8px; font-weight: 600; 
+            height: 38px; /* Altura fixa para alinhar */
+            line-height: 1.2; color: #333;
+            overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        }
+
+        /* O ELEMENTO MÁGICO DO ALINHAMENTO */
+        .spacer { flex-grow: 1; }
+
         .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; }
-        .btn-add { background: var(--dourado); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; width: 100%; transition: 0.2s; margin-top: auto; }
+        
+        .btn-add { background: var(--dourado); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; width: 100%; transition: 0.2s; letter-spacing: 0.5px; }
         .btn-add:active { transform: scale(0.95); }
         .btn-edit { position: absolute; top: 5px; right: 5px; background: white; color: #333; border-radius: 50%; width: 30px; height: 30px; font-size: 0.8rem; cursor: pointer; display: none; border: 1px solid #eee; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* UI MODAIS */
+        /* Modais (Mantidos) */
         .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; }
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
         .modal-content { background: white; width: 95%; max-width: 450px; max-height: 90vh; border-radius: 20px; padding: 25px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
@@ -101,21 +100,15 @@
         .controles-qtd { display: flex; align-items: center; gap: 10px; }
         .btn-qtd { background: var(--nude); border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: var(--dourado-dark); font-weight: bold; }
         .btn-remover { color: #cc0000; margin-left: 10px; cursor: pointer; font-size: 1.1rem; }
-        
         .form-group { margin-top: 15px; }
         .form-group label { display: block; font-size: 0.7rem; color: var(--dourado-dark); font-weight: bold; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--rose); border-radius: 8px; font-size: 0.9rem; }
         input[type="file"] { border: 1px dashed var(--dourado); background: #fdfdfd; padding: 10px; font-size: 0.8rem; width: 100%; }
-        
-        .btn-salvar { background: #22c55e; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .btn-delete { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 8px; margin-top: 10px; cursor: pointer; width: 100%; }
         .total-geral { margin-top: 20px; padding: 15px; background: var(--nude); border-radius: 8px; text-align: right; font-weight: bold; color: var(--dourado-dark); font-size: 1.1rem; }
         .pix-area { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; }
         .btn-copiar-pix { background: #16a34a; color: white; border: none; padding: 5px 15px; border-radius: 15px; font-size: 0.7rem; cursor: pointer; margin-left: 5px; font-weight: bold; }
         .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; }
         #previewImg { width: 100%; height: 150px; object-fit: contain; margin-top: 10px; border: 1px solid #eee; display: none; }
-        
-        /* Lista de Categorias no Admin */
         .cat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
         .cat-item span { font-weight: 500; }
         .btn-del-cat { color: red; cursor: pointer; font-size: 0.9rem; }
@@ -132,7 +125,6 @@
         <aside class="sidebar" id="sidebarMenu">
             <div class="sidebar-title">Categorias</div>
             <div id="listaCategoriasMenu"></div>
-            
             <div class="admin-section" id="adminPanel">
                 <button class="menu-btn btn-admin-action" onclick="abrirAdmin()"><i class="fas fa-plus-circle"></i> Novo</button>
                 <button class="menu-btn btn-admin-action" onclick="abrirGestaoCategorias()"><i class="fas fa-tags"></i> Cats</button>
@@ -190,26 +182,24 @@
             <input type="hidden" id="urlImagemAtual">
 
             <div class="form-group"><label>Categoria / Marca</label>
-                <select id="admMarca">
-                    </select>
+                <select id="admMarca"></select>
             </div>
-            
             <div class="form-group"><label>Nome do Produto</label><input type="text" id="admNome"></div>
             <div class="form-group"><label>Preço (Ex: 199.90)</label><input type="number" step="0.01" id="admPreco"></div>
             
             <div class="form-group"><label>Formato da Foto</label>
                 <select id="admFormato">
                     <option value="ratio-quadrado">⏹️ Quadrado (Padrão)</option>
-                    <option value="ratio-retrato">📱 Retrato (Vertical)</option>
-                    <option value="ratio-paisagem">▬ Paisagem (Horizontal)</option>
+                    <option value="ratio-retrato">📱 Retrato (Lingerie)</option>
+                    <option value="ratio-paisagem">▬ Paisagem (Kits)</option>
                 </select>
             </div>
 
             <div class="form-group"><label>Foto do Produto</label>
                 <input type="file" id="admArquivo" accept="image/*" onchange="previewImagem(event)">
                 <img id="previewImg" src="">
+                <small style="color:#666; font-size:0.7rem;">A foto será ajustada para preencher o formato escolhido.</small>
             </div>
-            
             <button type="button" class="btn-salvar" id="btnSalvarProd" onclick="salvarProduto()">SALVAR NO BANCO</button>
             <button type="button" class="btn-delete" onclick="deletarProduto()" id="btnDeletar" style="display:none;">EXCLUIR PRODUTO</button>
             <button type="button" onclick="fecharModal('modalAdmin')" style="background:transparent; border:none; width:100%; margin-top:15px; color:#666; cursor:pointer;">Cancelar</button>
@@ -223,14 +213,13 @@
                 <input type="text" id="novaCatNome" placeholder="Nova Categoria (Ex: Semijoias)">
                 <button onclick="adicionarCategoria()" style="background:var(--dourado); color:white; border:none; padding:0 15px; border-radius:8px; cursor:pointer;">+</button>
             </div>
-            <div id="listaCategoriasAdmin" style="margin-top:20px; max-height:300px; overflow-y:auto;">
-                </div>
+            <div id="listaCategoriasAdmin" style="margin-top:20px; max-height:300px; overflow-y:auto;"></div>
             <button type="button" onclick="fecharModal('modalCategorias')" style="background:transparent; border:none; width:100%; margin-top:15px; color:#666; cursor:pointer;">Fechar</button>
         </div>
     </div>
 
     <script>
-        // CONFIGURAÇÃO FIREBASE
+        // CONFIGURAÇÃO FIREBASE (Mantida)
         const firebaseConfig = {
             apiKey: "AIzaSyAZEhg5sWCrDYoiL67t_1jvG-L454brf44",
             authDomain: "virtuosa-catalogo.firebaseapp.com",
@@ -239,7 +228,6 @@
             messagingSenderId: "742470975939",
             appId: "1:742470975939:web:840d337f1590227cc5bd76"
         };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
@@ -259,12 +247,7 @@
         db.collection("categorias").orderBy("nome").onSnapshot((querySnapshot) => {
             categoriasCache = [];
             querySnapshot.forEach((doc) => { categoriasCache.push({ id: doc.id, ...doc.data() }); });
-            
-            if(categoriasCache.length === 0 && !localStorage.getItem('catInicializadas')) {
-                criarCategoriasPadrao();
-            } else {
-                renderMenuCategorias();
-            }
+            if(categoriasCache.length === 0 && !localStorage.getItem('catInicializadas')) { criarCategoriasPadrao(); } else { renderMenuCategorias(); }
         });
 
         async function criarCategoriasPadrao() {
@@ -273,18 +256,8 @@
             localStorage.setItem('catInicializadas', 'true');
         }
 
-        // --- MAPA DE ÍCONES INTELIGENTE ---
         function getIcone(nome) {
-            const map = {
-                'Natura': 'fa-leaf',
-                'Avon': 'fa-magic',
-                'O Boticário': 'fa-pump-soap',
-                'Eudora': 'fa-gem',
-                'Lingerie': 'fa-heart',
-                'Cabelos': 'fa-cut',
-                'Semijoias': 'fa-ring',
-                'Infantil': 'fa-baby'
-            };
+            const map = { 'Natura': 'fa-leaf', 'Avon': 'fa-magic', 'O Boticário': 'fa-pump-soap', 'Eudora': 'fa-gem', 'Lingerie': 'fa-heart', 'Cabelos': 'fa-cut', 'Semijoias': 'fa-ring', 'Infantil': 'fa-baby' };
             return map[nome] || 'fa-star';
         }
 
@@ -293,21 +266,17 @@
             const selectAdmin = document.getElementById('admMarca');
             const listaAdmin = document.getElementById('listaCategoriasAdmin');
             
-            // 1. Menu Lateral (Cliente)
             let htmlMenu = `<button class="menu-btn ${filtroAtual === 'todos' ? 'active' : ''}" onclick="filtrar('todos')"><i class="fas fa-th-large"></i> Todos</button>`;
             categoriasCache.forEach(cat => {
                 const isActive = filtroAtual === cat.nome ? 'active' : '';
-                const icone = getIcone(cat.nome);
-                htmlMenu += `<button class="menu-btn ${isActive}" onclick="filtrar('${cat.nome}')"><i class="fas ${icone}"></i> ${cat.nome}</button>`;
+                htmlMenu += `<button class="menu-btn ${isActive}" onclick="filtrar('${cat.nome}')"><i class="fas ${getIcone(cat.nome)}"></i> ${cat.nome}</button>`;
             });
             menuContainer.innerHTML = htmlMenu;
 
-            // 2. Select Admin
             let htmlSelect = '';
             categoriasCache.forEach(cat => { htmlSelect += `<option value="${cat.nome}">${cat.nome}</option>`; });
             selectAdmin.innerHTML = htmlSelect;
 
-            // 3. Lista Gestão
             if(listaAdmin) {
                 listaAdmin.innerHTML = categoriasCache.map(cat => `
                     <div class="cat-item">
@@ -318,6 +287,7 @@
             }
         }
 
+        // --- RENDERIZAÇÃO DA VITRINE ---
         function renderVitrine(categoria) {
             const vitrine = document.getElementById('vitrine');
             vitrine.style.opacity = '0';
@@ -332,13 +302,22 @@
                     vitrine.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #999;"><i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i><p>Nenhum produto nesta categoria.</p></div>';
                 } else {
                     vitrine.innerHTML = filtrados.map(p => {
-                        const classeFormato = p.formato ? p.formato : 'ratio-quadrado';
+                        // USA O FORMATO ESCOLHIDO PELO USUÁRIO
+                        const formatoClass = p.formato ? p.formato : 'ratio-quadrado';
+                        
                         return `
                         <div class="produto-card">
                             ${isAdmin ? `<button class="btn-edit" style="display:block" onclick="editarProduto('${p.id}')"><i class="fas fa-pen"></i></button>` : ''}
-                            <img src="${p.img}" class="produto-img ${classeFormato}" onerror="this.src='https://via.placeholder.com/150'">
+                            
+                            <div class="img-container ${formatoClass}">
+                                <img src="${p.img}" class="produto-img" onerror="this.src='https://via.placeholder.com/150'">
+                            </div>
+                            
                             <div class="marca-tag">${p.marca}</div>
                             <div class="produto-nome">${p.nome}</div>
+                            
+                            <div class="spacer"></div>
+                            
                             <div class="produto-preco">R$ ${parseFloat(p.preco).toFixed(2).replace('.', ',')}</div>
                             <button class="btn-add" onclick="addSacola('${p.id}')">ADICIONAR</button>
                         </div>
@@ -348,7 +327,7 @@
             }, 300);
         }
 
-        // --- GESTÃO CATEGORIAS ---
+        // --- FUNÇÕES DE ADMIN ---
         function abrirGestaoCategorias() { document.getElementById('modalCategorias').style.display = 'flex'; }
         function adicionarCategoria() {
             const nome = document.getElementById('novaCatNome').value.trim();
@@ -357,14 +336,12 @@
         }
         function removerCategoria(id) { if(confirm("Remover categoria do menu?")) { db.collection("categorias").doc(id).delete(); } }
 
-        // --- ADMIN SYSTEM (Corrigido para Mobile) ---
         let clicks = 0;
         document.getElementById('logoClick').onclick = () => {
             if(isAdmin) return;
             clicks++;
             if(clicks === 5) {
                 isAdmin = true;
-                // Ativa a section (o CSS media query vai decidir se mostra em coluna ou linha)
                 document.getElementById('adminPanel').style.display = 'flex';
                 alert("MODO ADMIN ATIVADO!");
                 renderVitrine();
@@ -378,7 +355,6 @@
             renderVitrine();
         }
 
-        // --- CRUD & UPLOAD (Mantidos) ---
         function abrirAdmin() { document.getElementById('modalAdmin').style.display = 'flex'; limparAdmin(); }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
         function previewImagem(event) { const file = event.target.files[0]; if(file) { const img = document.getElementById('previewImg'); img.src = URL.createObjectURL(file); img.style.display = 'block'; } }
@@ -404,19 +380,15 @@
                 let url = document.getElementById('urlImagemAtual').value;
                 const file = document.getElementById('admArquivo').files[0];
                 if(file) url = await comprimirImagem(file);
-                
                 const dados = {
                     marca: document.getElementById('admMarca').value,
                     nome: document.getElementById('admNome').value,
                     preco: parseFloat(document.getElementById('admPreco').value),
-                    formato: document.getElementById('admFormato').value,
+                    formato: document.getElementById('admFormato').value, // SALVA O FORMATO ESCOLHIDO
                     img: url
                 };
-                
                 const id = document.getElementById('editId').value;
-                if(id) await db.collection("produtos").doc(id).update(dados);
-                else await db.collection("produtos").add(dados);
-                
+                if(id) await db.collection("produtos").doc(id).update(dados); else await db.collection("produtos").add(dados);
                 alert("Salvo!"); fecharModal('modalAdmin');
             } catch(e) { console.error(e); alert("Erro ao salvar"); }
             finally { btn.innerText="SALVAR NO BANCO"; btn.disabled=false; }
@@ -428,7 +400,7 @@
             document.getElementById('admMarca').value=p.marca;
             document.getElementById('admNome').value=p.nome;
             document.getElementById('admPreco').value=p.preco;
-            document.getElementById('admFormato').value=p.formato||'ratio-quadrado';
+            document.getElementById('admFormato').value=p.formato || 'ratio-quadrado'; // CARREGA O FORMATO
             document.getElementById('urlImagemAtual').value=p.img;
             document.getElementById('previewImg').src=p.img;
             document.getElementById('previewImg').style.display='block';
@@ -441,9 +413,9 @@
         }
         function limparAdmin() {
             document.getElementById('editId').value=""; document.getElementById('admNome').value=""; document.getElementById('admPreco').value=""; document.getElementById('admArquivo').value=""; document.getElementById('urlImagemAtual').value=""; document.getElementById('previewImg').style.display='none'; document.getElementById('btnDeletar').style.display='none';
+            document.getElementById('admFormato').value = 'ratio-quadrado';
         }
 
-        // --- CARRINHO & CHECKOUT ---
         function filtrar(c) { renderVitrine(c); }
         function addSacola(id) { if(sacola[id]) sacola[id].qtd++; else sacola[id]={...produtosCache.find(p=>p.id===id), qtd:1}; atualizarBadge(); }
         function mudarQtd(id,d) { if(sacola[id]){ sacola[id].qtd+=d; if(sacola[id].qtd<=0) delete sacola[id]; atualizarBadge(); abrirCheckout(); } }
