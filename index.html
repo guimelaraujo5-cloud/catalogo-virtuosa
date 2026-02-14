@@ -12,132 +12,86 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- ESTILOS VISUAIS (V23 - SIDEBAR LAYOUT) --- */
+        /* --- ESTILOS VISUAIS (V24 - CATEGORIAS DINÂMICAS) --- */
         :root { --dourado: #C5A059; --dourado-dark: #A68546; --nude: #F9F1F0; --rose: #EAD8D3; --branco: #FFFFFF; --texto: #4A4A4A; }
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
         body { font-family: 'Montserrat', sans-serif; color: var(--texto); background-color: #fafafa; -webkit-tap-highlight-color: transparent; }
         
-        /* HEADER SIMPLIFICADO */
         header { padding: 15px; text-align: center; background: white; border-bottom: 1px solid var(--rose); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .logo { max-width: 120px; cursor: pointer; }
 
-        /* --- LAYOUT PRINCIPAL (SIDEBAR + GRID) --- */
-        .main-wrapper {
-            display: flex;
-            max-width: 1200px;
-            margin: 20px auto;
-            gap: 30px;
-            padding: 0 20px;
-            align-items: flex-start; /* Importante para a sidebar não esticar */
-        }
+        .main-wrapper { display: flex; max-width: 1200px; margin: 20px auto; gap: 30px; padding: 0 20px; align-items: flex-start; }
 
-        /* --- MENU LATERAL (SIDEBAR) --- */
-        .sidebar {
-            width: 250px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--rose);
-            position: sticky;
-            top: 90px; /* Fica fixo ao rolar a página */
-            flex-shrink: 0; /* Não deixa espremer */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-        }
-
+        /* SIDEBAR (MENU) */
+        .sidebar { width: 250px; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--rose); position: sticky; top: 90px; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .sidebar-title { font-family: 'Playfair Display', serif; font-weight: bold; margin-bottom: 15px; color: var(--dourado-dark); font-size: 1.1rem; border-bottom: 1px solid var(--rose); padding-bottom: 10px; }
 
-        .menu-btn {
-            display: flex; align-items: center; gap: 10px;
-            width: 100%; text-align: left; padding: 12px 15px;
-            margin-bottom: 8px; border: 1px solid transparent;
-            background: transparent; color: var(--texto);
-            border-radius: 8px; cursor: pointer; transition: 0.3s;
-            font-size: 0.9rem; font-weight: 500;
-        }
-        
+        .menu-btn { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 12px 15px; margin-bottom: 8px; border: 1px solid transparent; background: transparent; color: var(--texto); border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; font-weight: 500; }
         .menu-btn:hover { background: var(--nude); color: var(--dourado-dark); }
         .menu-btn.active { background: var(--dourado); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3); }
         .menu-btn i { width: 20px; text-align: center; }
 
-        /* Botões Admin no Menu */
-        .btn-admin-painel { display: none; margin-top: 20px; border: 1px dashed #22c55e; color: #166534; }
-        .btn-admin-sair { display: none; border: 1px dashed #ef4444; color: #991b1b; }
+        /* Botões Admin */
+        .admin-section { border-top: 1px dashed var(--rose); margin-top: 15px; padding-top: 15px; display: none; flex-direction: column; gap: 5px; }
+        .btn-admin-action { border: 1px dashed #22c55e; color: #166534; }
+        .btn-admin-sair { border: 1px dashed #ef4444; color: #991b1b; }
 
-        /* --- VITRINE DE PRODUTOS --- */
+        /* VITRINE */
         .conteudo-produtos { flex-grow: 1; width: 100%; }
+        .grid-produtos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; opacity: 1; transition: opacity 0.4s ease; }
 
-        .grid-produtos { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 20px; 
-            opacity: 1; transition: opacity 0.4s ease;
-        }
-
-        /* RESPONSIVIDADE (MOBILE) */
         @media (max-width: 900px) {
             .main-wrapper { flex-direction: column; gap: 15px; margin-top: 10px; }
+            .sidebar { width: 100%; position: sticky; top: 60px; z-index: 90; display: flex; overflow-x: auto; padding: 10px; white-space: nowrap; gap: 10px; border: none; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+            .sidebar-title, .admin-section { display: none !important; } /* Esconde admin e título no mobile sticky */
+            /* Botões Admin no Mobile viram itens da lista horizontal */
+            .mobile-admin-btn { display: none; border: 1px dashed #22c55e; color: #166534; padding: 8px 16px; border-radius: 50px; font-size: 0.8rem; margin-right: 10px; }
             
-            /* Transforma Sidebar em Menu Horizontal no Celular */
-            .sidebar { 
-                width: 100%; position: static; 
-                display: flex; overflow-x: auto; 
-                padding: 10px; white-space: nowrap; gap: 10px;
-                border: none; background: transparent; box-shadow: none;
-            }
-            .sidebar-title { display: none; } /* Esconde título "Categorias" no mobile */
-            .menu-btn { 
-                width: auto; flex-shrink: 0; 
-                background: white; border: 1px solid var(--rose); 
-                padding: 8px 16px; font-size: 0.8rem; margin-bottom: 0;
-                border-radius: 50px; /* Botões redondos no mobile */
-            }
+            .menu-btn { width: auto; flex-shrink: 0; background: white; border: 1px solid var(--rose); padding: 8px 16px; font-size: 0.8rem; margin-bottom: 0; border-radius: 50px; }
             .grid-produtos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
 
-        /* CARD DE PRODUTO */
-        .produto-card { 
-            border: 1px solid var(--nude); border-radius: 12px; padding: 10px; 
-            text-align: center; display: flex; flex-direction: column; 
-            background: #fff; height: 100%; transition: transform 0.2s;
-        }
+        /* CARD PRODUTO */
+        .produto-card { border: 1px solid var(--nude); border-radius: 12px; padding: 10px; text-align: center; display: flex; flex-direction: column; background: #fff; height: 100%; transition: transform 0.2s; position: relative; }
         .produto-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        
         .produto-img { width: 100%; object-fit: cover; border-radius: 8px; margin-bottom: 10px; background: #fdfdfd; }
         .ratio-quadrado { aspect-ratio: 1 / 1; }
         .ratio-retrato { aspect-ratio: 3 / 4; }
         .ratio-paisagem { aspect-ratio: 4 / 3; }
-
         .marca-tag { font-size: 0.6rem; text-transform: uppercase; color: var(--dourado-dark); font-weight: bold; margin-bottom: 4px; }
         .produto-nome { font-size: 0.85rem; margin-bottom: 8px; font-weight: 600; min-height: 40px; line-height: 1.3; color: #333; }
         .produto-preco { color: var(--dourado-dark); font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; }
-        
-        .btn-add { background: var(--dourado); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; width: 100%; transition: 0.2s; margin-top: auto; letter-spacing: 0.5px; }
+        .btn-add { background: var(--dourado); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; width: 100%; transition: 0.2s; margin-top: auto; }
         .btn-add:active { transform: scale(0.95); }
-        
         .btn-edit { position: absolute; top: 5px; right: 5px; background: white; color: #333; border-radius: 50%; width: 30px; height: 30px; font-size: 0.8rem; cursor: pointer; display: none; border: 1px solid #eee; z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* (Mantendo Modais e Carrinho iguais à V22 - Ocultados para economizar espaço aqui, mas estão completos no código final) */
-        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; transition: 0.3s; }
-        .cart-badge:hover { transform: scale(1.05); }
-        
-        /* Modais */
+        /* UI MODAIS */
+        .cart-badge { position: fixed; bottom: 20px; right: 20px; background: var(--dourado-dark); color: white; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; display: flex; align-items: center; gap: 8px; font-weight: bold; }
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
         .modal-content { background: white; width: 95%; max-width: 450px; max-height: 90vh; border-radius: 20px; padding: 25px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         .item-checkout { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--nude); }
         .controles-qtd { display: flex; align-items: center; gap: 10px; }
         .btn-qtd { background: var(--nude); border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: var(--dourado-dark); font-weight: bold; }
         .btn-remover { color: #cc0000; margin-left: 10px; cursor: pointer; font-size: 1.1rem; }
+        
         .form-group { margin-top: 15px; }
         .form-group label { display: block; font-size: 0.7rem; color: var(--dourado-dark); font-weight: bold; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--rose); border-radius: 8px; font-size: 0.9rem; }
         input[type="file"] { border: 1px dashed var(--dourado); background: #fdfdfd; padding: 10px; font-size: 0.8rem; width: 100%; }
+        
+        .btn-salvar { background: #22c55e; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+        .btn-delete { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 8px; margin-top: 10px; cursor: pointer; width: 100%; }
         .total-geral { margin-top: 20px; padding: 15px; background: var(--nude); border-radius: 8px; text-align: right; font-weight: bold; color: var(--dourado-dark); font-size: 1.1rem; }
         .pix-area { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; }
         .btn-copiar-pix { background: #16a34a; color: white; border: none; padding: 5px 15px; border-radius: 15px; font-size: 0.7rem; cursor: pointer; margin-left: 5px; font-weight: bold; }
-        .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
-        .btn-salvar { background: #22c55e; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-        .btn-delete { background: #ef4444; color: white; padding: 10px; border: none; border-radius: 8px; margin-top: 10px; cursor: pointer; width: 100%; }
+        .btn-finalizar { background: #25d366; color: white; width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; margin-top: 25px; cursor: pointer; font-size: 1rem; }
         #previewImg { width: 100%; height: 150px; object-fit: contain; margin-top: 10px; border: 1px solid #eee; display: none; }
+        
+        /* Lista de Categorias no Admin */
+        .cat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
+        .cat-item span { font-weight: 500; }
+        .btn-del-cat { color: red; cursor: pointer; font-size: 0.9rem; }
+
     </style>
 </head>
 <body>
@@ -147,20 +101,16 @@
     </header>
 
     <div class="main-wrapper">
-        
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebarMenu">
             <div class="sidebar-title">Categorias</div>
+            <div id="listaCategoriasMenu"></div>
             
-            <button class="menu-btn active" onclick="filtrar('todos')"><i class="fas fa-th-large"></i> Todos</button>
-            <button class="menu-btn" onclick="filtrar('Natura')"><i class="fas fa-leaf"></i> Natura</button>
-            <button class="menu-btn" onclick="filtrar('Avon')"><i class="fas fa-magic"></i> Avon</button>
-            <button class="menu-btn" onclick="filtrar('O Boticário')"><i class="fas fa-pump-soap"></i> Boticário</button>
-            <button class="menu-btn" onclick="filtrar('Eudora')"><i class="fas fa-gem"></i> Eudora</button>
-            <button class="menu-btn" onclick="filtrar('Lingerie')"><i class="fas fa-heart"></i> Lingerie</button>
-            
-            <button class="menu-btn btn-admin-painel" id="btnAdminPublico" onclick="abrirAdmin()"><i class="fas fa-plus-circle"></i> Novo Produto</button>
-            <button class="menu-btn btn-admin-sair" id="btnSairAdmin" onclick="sairAdmin()"><i class="fas fa-sign-out-alt"></i> Sair Admin</button>
-        </aside>
+            <div class="admin-section" id="adminPanelDesktop">
+                <button class="menu-btn btn-admin-action" onclick="abrirAdmin()"><i class="fas fa-plus-circle"></i> Novo Produto</button>
+                <button class="menu-btn btn-admin-action" onclick="abrirGestaoCategorias()"><i class="fas fa-tags"></i> Gerenciar Categorias</button>
+                <button class="menu-btn btn-admin-sair" onclick="sairAdmin()"><i class="fas fa-sign-out-alt"></i> Sair Admin</button>
+            </div>
+            </aside>
 
         <main class="conteudo-produtos">
             <div class="grid-produtos" id="vitrine">
@@ -211,10 +161,9 @@
             <input type="hidden" id="editId">
             <input type="hidden" id="urlImagemAtual">
 
-            <div class="form-group"><label>Marca</label>
+            <div class="form-group"><label>Categoria / Marca</label>
                 <select id="admMarca">
-                    <option>Natura</option><option>Avon</option><option>O Boticário</option><option>Eudora</option><option>Lingerie</option>
-                </select>
+                    </select>
             </div>
             
             <div class="form-group"><label>Nome do Produto</label><input type="text" id="admNome"></div>
@@ -228,16 +177,27 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Foto do Produto</label>
+            <div class="form-group"><label>Foto do Produto</label>
                 <input type="file" id="admArquivo" accept="image/*" onchange="previewImagem(event)">
                 <img id="previewImg" src="">
-                <small style="color:#888; font-size:0.6rem;">Otimização automática ativada.</small>
             </div>
             
             <button type="button" class="btn-salvar" id="btnSalvarProd" onclick="salvarProduto()">SALVAR NO BANCO</button>
             <button type="button" class="btn-delete" onclick="deletarProduto()" id="btnDeletar" style="display:none;">EXCLUIR PRODUTO</button>
             <button type="button" onclick="fecharModal('modalAdmin')" style="background:transparent; border:none; width:100%; margin-top:15px; color:#666; cursor:pointer;">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modalCategorias">
+        <div class="modal-content">
+            <h3>Gerenciar Categorias</h3>
+            <div class="form-group" style="display:flex; gap:10px;">
+                <input type="text" id="novaCatNome" placeholder="Nova Categoria (Ex: Semijoias)">
+                <button onclick="adicionarCategoria()" style="background:var(--dourado); color:white; border:none; padding:0 15px; border-radius:8px; cursor:pointer;">+</button>
+            </div>
+            <div id="listaCategoriasAdmin" style="margin-top:20px; max-height:300px; overflow-y:auto;">
+                </div>
+            <button type="button" onclick="fecharModal('modalCategorias')" style="background:transparent; border:none; width:100%; margin-top:15px; color:#666; cursor:pointer;">Fechar</button>
         </div>
     </div>
 
@@ -256,18 +216,71 @@
         const db = firebase.firestore();
 
         let produtosCache = [];
+        let categoriasCache = [];
         let sacola = {};
         let isAdmin = false;
         let filtroAtual = 'todos';
 
-        // Carregamento Inicial
+        // CARREGAR DADOS INICIAIS
+        // 1. Produtos
         db.collection("produtos").onSnapshot((querySnapshot) => {
             produtosCache = [];
-            querySnapshot.forEach((doc) => {
-                produtosCache.push({ id: doc.id, ...doc.data() });
-            });
+            querySnapshot.forEach((doc) => { produtosCache.push({ id: doc.id, ...doc.data() }); });
             renderVitrine();
         });
+        
+        // 2. Categorias (Novo)
+        db.collection("categorias").orderBy("nome").onSnapshot((querySnapshot) => {
+            categoriasCache = [];
+            querySnapshot.forEach((doc) => { categoriasCache.push({ id: doc.id, ...doc.data() }); });
+            
+            // Se não tiver categorias no banco (primeira vez), cria as padrões
+            if(categoriasCache.length === 0 && !localStorage.getItem('catInicializadas')) {
+                criarCategoriasPadrao();
+            } else {
+                renderMenuCategorias();
+            }
+        });
+
+        async function criarCategoriasPadrao() {
+            const padroes = ["Natura", "Avon", "O Boticário", "Eudora", "Lingerie"];
+            for (const cat of padroes) { await db.collection("categorias").add({ nome: cat }); }
+            localStorage.setItem('catInicializadas', 'true');
+        }
+
+        // RENDERIZAÇÃO
+        function renderMenuCategorias() {
+            const menuContainer = document.getElementById('listaCategoriasMenu');
+            const selectAdmin = document.getElementById('admMarca');
+            const listaAdmin = document.getElementById('listaCategoriasAdmin');
+            
+            // 1. Menu Lateral (Cliente)
+            let htmlMenu = `<button class="menu-btn ${filtroAtual === 'todos' ? 'active' : ''}" onclick="filtrar('todos')"><i class="fas fa-th-large"></i> Todos</button>`;
+            
+            categoriasCache.forEach(cat => {
+                const isActive = filtroAtual === cat.nome ? 'active' : '';
+                // Ícone genérico (pode ser melhorado depois)
+                htmlMenu += `<button class="menu-btn ${isActive}" onclick="filtrar('${cat.nome}')"><i class="fas fa-tag"></i> ${cat.nome}</button>`;
+            });
+            menuContainer.innerHTML = htmlMenu;
+
+            // 2. Select no Modal de Criar Produto (Admin)
+            let htmlSelect = '';
+            categoriasCache.forEach(cat => {
+                htmlSelect += `<option value="${cat.nome}">${cat.nome}</option>`;
+            });
+            selectAdmin.innerHTML = htmlSelect;
+
+            // 3. Lista de Gestão (Admin)
+            if(listaAdmin) {
+                listaAdmin.innerHTML = categoriasCache.map(cat => `
+                    <div class="cat-item">
+                        <span>${cat.nome}</span>
+                        <i class="fas fa-trash-alt btn-del-cat" onclick="removerCategoria('${cat.id}')"></i>
+                    </div>
+                `).join('');
+            }
+        }
 
         function renderVitrine(categoria) {
             const vitrine = document.getElementById('vitrine');
@@ -275,16 +288,7 @@
 
             setTimeout(() => {
                 if (categoria) filtroAtual = categoria;
-                
-                // Atualiza Botões Ativos (No Menu Lateral)
-                document.querySelectorAll('.menu-btn').forEach(btn => {
-                    // Remove active de todos
-                    btn.classList.remove('active');
-                    // Verifica se o texto do botão bate com o filtro
-                    if(btn.innerText.includes(filtroAtual) || (filtroAtual === 'todos' && btn.innerText.includes('Todos')) || (filtroAtual === 'O Boticário' && btn.innerText.includes('Boticário'))) {
-                        btn.classList.add('active');
-                    }
-                });
+                renderMenuCategorias(); // Atualiza botões ativos
 
                 const filtrados = filtroAtual === 'todos' ? produtosCache : produtosCache.filter(p => p.marca.trim() === filtroAtual);
                 
@@ -308,6 +312,23 @@
             }, 300);
         }
 
+        // --- GESTÃO DE CATEGORIAS (NOVO) ---
+        function abrirGestaoCategorias() {
+            document.getElementById('modalCategorias').style.display = 'flex';
+        }
+        function adicionarCategoria() {
+            const nome = document.getElementById('novaCatNome').value.trim();
+            if(!nome) return alert("Digite um nome!");
+            db.collection("categorias").add({ nome: nome }).then(() => {
+                document.getElementById('novaCatNome').value = "";
+            });
+        }
+        function removerCategoria(id) {
+            if(confirm("Tem certeza? Isso não apaga os produtos, mas remove a categoria do menu.")) {
+                db.collection("categorias").doc(id).delete();
+            }
+        }
+
         // --- SISTEMA ADMIN ---
         let clicks = 0;
         document.getElementById('logoClick').onclick = () => {
@@ -315,24 +336,27 @@
             clicks++;
             if(clicks === 5) {
                 isAdmin = true;
-                // Mostra botões no Menu Lateral
-                document.getElementById('btnAdminPublico').style.display = 'flex';
-                document.getElementById('btnSairAdmin').style.display = 'flex';
-                alert("MODO ADMIN ATIVADO! Veja as opções no menu lateral.");
+                document.getElementById('adminPanelDesktop').style.display = 'flex';
+                // Adiciona botão mobile se necessário
+                const sidebar = document.getElementById('sidebarMenu');
+                if(window.innerWidth <= 900) {
+                   // Lógica para mobile (adicionar botões na lista horizontal se quiser)
+                   alert("MODO ADMIN: Use um PC para melhor gestão, mas o básico funciona aqui.");
+                } else {
+                   alert("MODO ADMIN ATIVADO!");
+                }
                 renderVitrine();
             }
         };
 
         function sairAdmin() {
-            isAdmin = false;
-            clicks = 0;
-            document.getElementById('btnAdminPublico').style.display = 'none';
-            document.getElementById('btnSairAdmin').style.display = 'none';
+            isAdmin = false; clicks = 0;
+            document.getElementById('adminPanelDesktop').style.display = 'none';
             alert("Modo Admin encerrado.");
             renderVitrine();
         }
 
-        // --- FUNÇÕES DE CRUD, UPLOAD, CARRINHO (Mantidas idênticas à V22) ---
+        // --- FUNÇÕES DE CRUD PRODUTO, UPLOAD, CARRINHO (Mantidas) ---
         function abrirAdmin() { document.getElementById('modalAdmin').style.display = 'flex'; limparAdmin(); }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
